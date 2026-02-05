@@ -1,0 +1,28 @@
+[project]
+name = "lei-enricher"
+version = "0.1.0"
+description = "Desktop app to enrich LEI records with Entity Status and Next Renewal Date"
+requires-python = ">=3.10"
+dependencies = [
+  "pandas>=2.0",
+  "requests>=2.31",
+  "openpyxl>=3.1",
+  "PySide6>=6.6",
+  "beautifulsoup4>=4.12",
+  "lxml>=5.0"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.0",
+  "responses>=0.25.0",
+  "pytest-qt>=4.4.0",
+  "ruff>=0.5.0"
+]
+ods = ["odfpy>=1.4"]
+
+[project.scripts]
+lei-enricher = "lei_enricher.main:main"
+
+[tool.ruff]
+line-length = 100
