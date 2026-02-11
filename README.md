@@ -1,75 +1,53 @@
-Short repo description
+# LEI Enricher (Desktop)
 
-Desktop tool that batch-validates and enriches LEI codes from Excel/LibreOffice spreadsheets using the GLEIF API (with optional fallback), writing Entity Status and Next Renewal Date back into adjacent columns.
+Batch-validate and enrich **LEI** codes from **Excel / LibreOffice Calc** using the **GLEIF API** (with optional fallback), and write results back into adjacent columns.
 
+---
 
+## Why this app exists
 
-Why this app exists
+Teams doing **KYC/AML**, compliance, or vendor validation often maintain long spreadsheets with LEIs.  
+Checking each LEI manually to confirm **Entity Status = ACTIVE** and capture **Next Renewal Date** is repetitive, slow, and easy to mess up.
 
-Banks, compliance teams, and analysts often keep large Excel/Calc lists of Legal Entity Identifiers (LEIs). Verifying whether each LEI is ACTIVE and tracking the Next Renewal Date is a repetitive, error-prone task when done manually via web searches or one-by-one API calls.
+This tool exists to turn that manual process into a **repeatable batch run**.
 
-What it does
+---
 
-This app reads LEIs from a spreadsheet, queries GLEIF first, and (optionally) uses a secondary provider for misses. It then writes the results back to the same file into neighboring columns, so the spreadsheet becomes immediately actionable for KYC/AML checks and renewal monitoring.
+## What it does
 
-How it improves the workflow
+- Reads LEIs from an **Excel/Calc** sheet
+- Queries **GLEIF first**
+- Optionally uses a **fallback provider for misses**
+- Writes results back to the file into **neighboring columns**, e.g.:
+  - **Entity Status**
+  - **Next Renewal Date**
+  - (optionally) other metadata depending on your configuration
 
-Compared to manual lookups or ad-hoc scripts, it provides:
+---
 
-One-click batch processing through a simple GUI
+## How it improves the workflow
 
-Consistent output columns (status/renewal date + helpful metadata)
+Compared to manual lookups or one-off scripts, it provides:
 
-Optional fallback for misses to improve coverage
+- **GUI-driven batch processing** (no “one by one” checking)
+- **Consistent output columns** (clean spreadsheet result)
+- **Optional fallback for misses** (better coverage)
+- **Rate-limit / anti-blocking friendly behavior** for large lists (delays/retries/backoff)
 
-Rate-limit / anti-blocking friendly behavior (delays/retries/backoff) to handle large lists more safely
+**Typical outcome:** hours of repetitive checking → a predictable run that updates the spreadsheet automatically.
 
-Typical outcome: hours of repetitive checking become a predictable batch run that updates the spreadsheet automatically.
+---
 
-Short documentation (How to use) — English Quickstart
-Quickstart
+## Quickstart
 
-Prerequisites
+### Prerequisites
+- Windows 10/11  
+- Python **3.10+** (recommended **3.11+**)
 
-Windows 10/11
+### Install (PowerShell)
 
-Python 3.10+ (recommended 3.11+)
-
-Install
-
-Clone the repository
-
-Create & activate a virtual environment
-
-Install the package
-
-Windows (PowerShell)
-
+```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 python -m pip install --upgrade pip
 pip install -e .
-
-Run
-lei-enricher
-
-
-(If you don’t have the console script available, try:)
-
-python -m lei_enricher
-
-Use the GUI
-
-Select your Excel/Calc file
-
-Choose the sheet (if prompted) and the column that contains LEIs
-
-Click Start to enrich the file
-
-The app writes results into the next columns (e.g., Entity Status, Next Renewal Date, etc.)
-
-Notes
-
-Enable “fallback for misses” only if you want extra coverage when GLEIF returns no result for some LEIs.
-
-For very large files, use conservative rate settings (slower is safer).
