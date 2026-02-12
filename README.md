@@ -110,6 +110,7 @@ If installs fail, confirm Python is in PATH and rerun:
 ```powershell
 python -m pip install --upgrade pip
 ```
-License
+---
+### License
 
 This project is licensed under the **GPLv3** License — see the **LICENSE** file for details.
