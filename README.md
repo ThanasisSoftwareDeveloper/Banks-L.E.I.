@@ -52,9 +52,6 @@ python -m venv .venv
 python -m pip install --upgrade pip
 pip install -e .
 ```
-### Install for users (just send DM)
-- Download installer / Run setup
----
 
 ### Run (for developers)
 ```powershell
@@ -65,6 +62,116 @@ If the console command isn’t available, try:
 ```powershell
 python -m lei_enricher
 ```
+---
+## Build & Release (Windows)
+
+This project provides a desktop GUI app that enriches LEI records from Excel/Calc files.
+Below are the exact steps to generate:
+- a **portable app** (`Bank_LEI.exe`), and
+- a **user-friendly installer** (**Next → Next → Finish**) for non-expert users.
+
+> **Important:** Use **Command Prompt (CMD)** in VS Code Terminal for these steps (PowerShell may freeze on some setups).
+
+---
+
+### Stage 1 — Prepare the build environment (CMD + venv)
+
+**Where:** VS Code → **Terminal → New Terminal** → select **Command Prompt (CMD)**  
+**Project folder:** `C:\Projects\Bank_lei`
+
+```bat
+cd /d C:\Projects\Bank_lei
+.\.venv\Scripts\activate.bat
+python -m pip install --upgrade pip
+pip install pyinstaller
+```
+### Stage 2 — Build the app executable (PyInstaller, one-folder)
+- 2.1 Create an entry launcher (required for packaging)
+
+Create this file in the project root:
+File: run_bank_lei.py
+```bat
+from lei_enricher.main import main
+
+if __name__ == "__main__":
+    main()
+```
+- 2.2 Build (one-folder) 
+```bat
+pyinstaller --noconsole --name Bank_LEI run_bank_lei.py
+```
+Output (portable app):
+dist\Bank_LEI\Bank_LEI.exe
+
+Quick test: double-click dist\Bank_LEI\Bank_LEI.exe
+
+### Stage 3 — Create the installer (Inno Setup: Next/Next/Finish)
+- 3.1 Create the Inno Setup script
+
+Create this file in the project root:
+File: installer.iss
+
+(The script copies everything from dist\Bank_LEI\* into {Program Files}\Bank LEI and creates shortcuts.)
+```bat
+#define MyAppName "Bank LEI"
+#define MyAppExeName "Bank_LEI.exe"
+#define MyAppPublisher "Bank LEI Team"
+#define MyAppVersion "0.1.0"
+
+[Setup]
+AppId={{B3A1B6E1-4A2E-4F25-9F50-9A2A6F0B1C01}
+AppName={#MyAppName}
+AppVersion={#MyAppVersion}
+AppPublisher={#MyAppPublisher}
+DefaultDirName={autopf}\{#MyAppName}
+DefaultGroupName={#MyAppName}
+DisableProgramGroupPage=yes
+OutputDir=installer_output
+OutputBaseFilename=Bank_LEI_Setup_{#MyAppVersion}
+Compression=lzma2
+SolidCompression=yes
+WizardStyle=modern
+PrivilegesRequired=admin
+
+[Languages]
+Name: "english"; MessagesFile: "compiler:Default.isl"
+; Optional Greek UI (only if Greek.isl exists on your system)
+; Name: "greek"; MessagesFile: "compiler:Languages\Greek.isl"
+
+[Tasks]
+Name: "desktopicon"; Description: "Create a &desktop icon"; GroupDescription: "Additional icons:"; Flags: unchecked
+
+[Files]
+Source: "dist\Bank_LEI\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs createallsubdirs
+
+[Icons]
+Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
+Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
+
+[Run]
+Filename: "{app}\{#MyAppExeName}"; Description: "Launch {#MyAppName}"; Flags: nowait postinstall skipifsilent
+```
+- 3.2 Compile the installer
+
+Install Inno Setup 6.x
+
+Open Inno Setup Compiler
+
+File → Open → select installer.iss
+
+Click Compile
+
+Output (installer for non-technical users):
+
+installer_output\Bank_LEI_Setup_0.1.0.exe
+
+Distribute this installer to employees. They can install the app via Next → Next → Finish and run it from Start Menu/Desktop shortcut.
+
+## Outputs summary
+
+Portable app (for quick testing): dist\Bank_LEI\Bank_LEI.exe
+
+Installer (recommended for end users): installer_output\Bank_LEI_Setup_0.1.0.exe
 ---
 ### Using the app (GUI)
 
