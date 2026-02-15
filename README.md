@@ -169,9 +169,9 @@ Distribute this installer to employees. They can install the app via Next → Ne
 
 ## Outputs summary
 
-Portable app (for quick testing): dist\Bank_LEI\Bank_LEI.exe
+- Portable app (for quick testing): dist\Bank_LEI\Bank_LEI.exe
 
-Installer (recommended for end users): installer_output\Bank_LEI_Setup_0.1.0.exe
+- Installer (recommended for end users): installer_output\Bank_LEI_Setup_0.1.0.exe
 ---
 ### Using the app (GUI)
 
