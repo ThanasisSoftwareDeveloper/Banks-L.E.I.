@@ -22,6 +22,7 @@ This tool exists to turn that manual process into a **repeatable batch run**.
   - **Entity Status**
   - **Next Renewal Date**
   - (optionally) other metadata depending on your configuration
+<img width="799" height="546" alt="image" src="https://github.com/user-attachments/assets/6dd1818a-8aa2-4e56-99bd-a7c278a25fe1" />
 
 ---
 
