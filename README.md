@@ -7,7 +7,7 @@ Batch-validate and enrich **LEI** codes from **Excel / LibreOffice Calc** using 
 ## Why this app exists
 
 Teams doing **KYC/AML**, compliance, or vendor validation often maintain long spreadsheets with LEIs.  
-Checking each LEI manually to confirm **Entity Status = ACTIVE** and capture **Next Renewal Date** is repetitive, slow, and easy to mess up.
+Checking each LEI manually to confirm **Entity Status = ACTIVE** and capture **Next Renewal Date** is repetitive, slow, and easy to mess up, reducing the time required to search for and enter the Status and Next Renewal Date to the time required for a single LEI. If the list contains 100 LEIs, by 99%.
 
 This tool exists to turn that manual process into a **repeatable batch run**.
 
