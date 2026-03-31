@@ -16,6 +16,8 @@ Built for KYC / AML / compliance teams who maintain spreadsheets with Legal Enti
 - ⚡ **CLI** — `lei-enrich input.xlsx --output enriched.xlsx`
 - 🔄 **Fallback** — optional HTML scrape of lei-lookup.com for GLEIF misses
 
+<img width="719" height="498" alt="LEI" src="https://github.com/user-attachments/assets/8cd975e7-dcf9-48bb-9aa0-1cf16750cfaa" />
+
 ---
 
 ## Installation
