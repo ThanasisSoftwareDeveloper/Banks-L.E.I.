@@ -1,4 +1,4 @@
-# LEI Enricher (Desktop)
+# LEI Bank Enricher (Desktop)
 
 Batch-validate and enrich **LEI** codes from **Excel / LibreOffice Calc** using the **GLEIF API** (with optional fallback), and write results back into adjacent columns.
 
