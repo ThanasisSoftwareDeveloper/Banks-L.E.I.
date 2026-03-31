@@ -1,4 +1,4 @@
-# LEI Enricher
+# LEI Bank Enricher
 
 **Batch-validate and enrich LEI codes** from Excel / CSV files using the [GLEIF API](https://www.gleif.org/en/lei-data/gleif-api), with optional fallback provider.
 
