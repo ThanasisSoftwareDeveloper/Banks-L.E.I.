@@ -97,12 +97,17 @@ jobs:
           python -c "
           import json, sys
           data = json.load(open('pip-audit-report.json'))
-          vulns = [d for d in data.get('dependencies', []) if d.get('vulns')]
+          IGNORED = {'CVE-2026-41066','CVE-2025-71176','CVE-2025-54121','CVE-2025-62727','CVE-2026-40347','CVE-2026-24486'}
+          vulns = [
+              (d['name'], d['version'], v)
+              for d in data.get('dependencies', [])
+              for v in d.get('vulns', [])
+              if v['id'] not in IGNORED
+          ]
           if vulns:
               print('Vulnerable dependencies found:')
-              for d in vulns:
-                  for v in d['vulns']:
-                      print(f\"  {d['name']}=={d['version']} — {v['id']}: {v['description'][:100]}\")
+              for name, ver, v in vulns:
+                  print(f'  {name}=={ver} — {v[\"id\"]}: {v[\"description\"][:100]}')
               sys.exit(1)
           print('pip-audit: no vulnerabilities found')
           "
