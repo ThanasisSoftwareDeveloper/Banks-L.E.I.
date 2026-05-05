@@ -9,6 +9,9 @@
 [![License](https://img.shields.io/badge/License-GPL--3.0-blue?style=flat-square)](LICENSE)
 
 ---
+> **[findlei.com](https://www.findlei.com/)** · Checks Entity Status & Next Renewal Date for every LEI in your Excel file.
+
+---
 
 ## ✨ Features
 
