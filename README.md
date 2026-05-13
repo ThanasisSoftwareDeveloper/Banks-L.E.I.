@@ -1,0 +1,197 @@
+# FindLEI — LEI Batch Compliance Checker
+
+---
+## Authors
+- Thanasis Koufos (Linkedin: ThanasisSoftwareDeveloper)
+- Dimitrios S. Sfyris (Linkedin: Dimitrios-S-Sfyris)
+---
+
+# Stop Validating LEI Codes One by One — There's a Better Way
+
+![FindLEI Screenshot](https://raw.githubusercontent.com/ThanasisSoftwareDeveloper/Banks-L.E.I./main/findlei-homepage-screenshot.png)
+
+Validating LEI codes one by one is slow, repetitive, and easy to get wrong.
+
+If you have ever worked with a spreadsheet full of Legal Entity Identifiers, you probably know the process:
+
+Open the file. Copy one LEI. Search it in GLEIF. Check the result. Copy the status back into Excel. Move to the next row. Repeat.
+
+For a few LEIs, that is manageable.
+
+For 100 or 200 LEIs, it becomes hours of manual work.
+
+That is the problem we built FindLEI to solve.
+
+---
+> **Note:** The current API specification supports up to **200 LEI codes per uploaded file**. Each document you upload is processed as a single batch run of up to 200 records.
+
+## What Is an LEI?
+
+A Legal Entity Identifier, or LEI, is a 20-character global identifier used to identify legal entities in financial transactions.
+
+LEIs are used by banks, asset managers, compliance teams, KYC teams, AML teams, operations teams, and other financial workflows.
+
+When teams receive spreadsheets with LEIs, they usually need to check:
+
+- whether the LEI exists
+- whether the entity status is active
+- whether the next renewal date is still valid
+
+The validation itself is important.
+
+The problem is doing it manually, row by row.
+
+---
+
+## Why Manual LEI Validation Takes So Long
+
+Manual LEI lookup looks harmless when the file is small.
+
+But the work grows quickly.
+
+| Method | Time per LEI | 200 LEIs |
+|---|---:|---:|
+| Manual portal lookup | ~2 min | ~7 hours |
+| One-by-one scripting | ~30 sec | ~1.5 hours |
+| FindLEI batch run | ~2 sec | ~7 minutes |
+
+The exact timing depends on the file, connection, and workflow.
+
+But the pattern is the same: manual validation does not scale.
+
+It also creates room for mistakes:
+
+- copying the wrong result
+- pasting into the wrong row
+- using different date formats
+- mixing status labels
+- repeating the same work during the next review
+
+For teams that handle LEI files regularly, this is not just a small inconvenience. It becomes a process problem.
+
+---
+
+## FindLEI: Batch LEI Validation for Spreadsheet Workflows
+
+FindLEI is built for teams that already work with LEIs in spreadsheets.
+
+The workflow is simple:
+
+1. Upload your Excel or LibreOffice Calc file, whith LEI column
+2. Click Start
+3. FindLEI checks each LEI against GLEIF data
+4. The validation results are written back into your spreadsheet
+
+The goal is not to replace the spreadsheet workflow.
+
+The goal is to remove the repetitive part: searching each LEI manually and copying the result back row by row.
+
+The output stays familiar, so the completed file can go back into the team’s normal review process.
+
+---
+
+## Who Is This For?
+
+FindLEI is useful for teams that regularly review lists of legal entities, counterparties, clients, vendors, funds, or trading entities.
+
+That includes:
+
+- compliance officers running periodic reviews
+- KYC and AML analysts checking onboarding files
+- risk teams maintaining counterparty registers
+- operations teams doing pre-settlement checks
+- finance teams cleaning or reviewing entity data
+
+If your team checks LEIs in spreadsheets more than once a month, batch validation can save a meaningful amount of time.
+
+---
+
+## Why GLEIF Matters
+
+FindLEI checks LEIs against GLEIF data.
+
+That matters because GLEIF is the source teams already use when they manually search LEIs one by one.
+
+FindLEI keeps the same validation source, but removes the repetitive lookup process.
+
+Instead of searching each LEI manually, the tool reads the LEIs from your spreadsheet and writes the results back into the file.
+
+---
+
+## Privacy-friendly by design
+
+FindLEI validates LEIs using only the LEI values from your spreadsheet.
+
+It does not need balances, transaction details, internal notes, commercial terms, or any other business context.
+
+FindLEI checks each LEI against official GLEIF data and writes the validation results back to your spreadsheet.
+
+For teams that prefer full control over their workflow, FindLEI is open source and can also be run locally or inside company-managed infrastructure with Docker.
+
+That gives you two options: use the hosted version for convenience, or run it in your own environment when you want the workflow handled internally.
+
+---
+
+## Built for Spreadsheet Batches
+
+FindLEI is not just for checking one or two LEIs.
+
+It is designed for batch validation, where the input is a real spreadsheet with many rows.
+
+The current upload limit is 200 LEI codes per file. Each uploaded document is processed as one batch run.
+
+That makes it useful for recurring review cycles, cleanup tasks, onboarding checks, and operational workflows where LEI validation has to be repeated regularly.
+
+The main benefit is consistency.
+
+Every run follows the same process, uses the same source, and writes the results back in a structured way.
+
+---
+
+## Open Source Core, Managed Hosted Version
+
+The core validator is open source.
+
+That means technical teams can inspect the code, run it locally, or adapt it to their own workflow.
+
+The hosted version is for teams that want a managed workflow, higher limits, support, and additional compliance features without maintaining their own deployment.
+
+This keeps the project useful for both types of users:
+
+- teams that want to self-host and stay in full control
+- teams that want the fastest path with a managed version
+
+---
+
+## Why We Built It
+
+We built FindLEI because LEI validation should not take hours of analyst time.
+
+It is important work, but the manual process is repetitive.
+
+When a team already has the LEIs in a spreadsheet, the tool should be able to read the LEI column, check the data, and return the file with the validation results added.
+
+That is what FindLEI does.
+
+---
+
+## Try FindLEI
+
+If you validate LEIs in spreadsheets, you can try the hosted version here:
+
+https://www.findlei.com
+
+If you want to review the code, self-host it, or adapt it to your own workflow, the project is open source:
+
+https://github.com/ThanasisSoftwareDeveloper/Banks-LEI
+
+Feedback is welcome, especially around:
+
+- spreadsheet formats
+- batch size needs
+- local deployment
+- validation edge cases
+- compliance workflow requirements
+
+If FindLEI saves you time, star the repo or open an issue with what would make it more useful for your team.
+
