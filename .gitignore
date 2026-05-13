@@ -1,3 +1,8 @@
 lei_checker.py
 excel_handler.py
 rate_limiter.py
+
+dist/
+*.egg-info/
+venv/
+__pycache__/
