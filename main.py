@@ -129,6 +129,23 @@ async def prometheus_metrics():
 # }
 jobs: Dict[str, dict] = {}
 
+# ── Job Limits ────────────────────────────────────────────────────────────────
+MAX_JOBS_PER_IP    = 3   # max active jobs per IP
+MAX_JOBS_GLOBAL    = 50  # max active jobs globally
+
+def _count_active_jobs_for_ip(ip: str) -> int:
+    return sum(
+        1 for j in jobs.values()
+        if j.get("client_ip") == ip and j.get("status") in ("pending", "processing")
+    )
+
+def _count_active_jobs_global() -> int:
+    return sum(
+        1 for j in jobs.values()
+        if j.get("status") in ("pending", "processing")
+    )
+
+
 
 # ── Helpers ───────────────────────────────────────────────────────────────────
 def _get_job(job_id: str) -> dict:
@@ -152,12 +169,17 @@ async def upload_excel(request: Request, file: UploadFile = File(...)):
             detail=f"Unsupported file type '{suffix}'. Use .xlsx, .ods or .xls",
         )
         
-client_ip = request.client.host if request.client else "unknown"
+    client_ip = request.client.host if request.client else "unknown"
     if not _check_upload_rate_limit(client_ip):
         raise HTTPException(
             status_code=429,
             detail="Too many uploads. Please wait before trying again."
         )
+    if _count_active_jobs_global() >= MAX_JOBS_GLOBAL:
+        raise HTTPException(status_code=503, detail="Server busy. Try again later.")
+    if _count_active_jobs_for_ip(client_ip) >= MAX_JOBS_PER_IP:
+        raise HTTPException(status_code=429, detail="Too many active jobs. Wait for yours to complete.")
+
 
 
     MAX_UPLOAD_BYTES = 10 * 1024 * 1024  # 10 MB
@@ -189,6 +211,7 @@ client_ip = request.client.host if request.client else "unknown"
         "original_bytes": content,
         "filename":       file.filename,
         "column_info":    column_info,
+        "client_ip":    client_ip,
     }
 
     # Filter out blanks/invalids for display
