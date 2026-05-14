@@ -121,9 +121,16 @@ async def upload_excel(file: UploadFile = File(...)):
             detail=f"Unsupported file type '{suffix}'. Use .xlsx, .ods or .xls",
         )
 
+    MAX_UPLOAD_BYTES = 10 * 1024 * 1024  # 10 MB
+
+    # Έλεγχος Content-Length header πριν διαβαστεί το αρχείο
+    content_length = file.size
+    if content_length is not None and content_length > MAX_UPLOAD_BYTES:
+        raise HTTPException(status_code=413, detail="File too large (max 10 MB)")
+
     content = await file.read()
-    if len(content) > 50 * 1024 * 1024:   # 50 MB guard
-        raise HTTPException(status_code=413, detail="File too large (max 50 MB)")
+    if len(content) > MAX_UPLOAD_BYTES:
+        raise HTTPException(status_code=413, detail="File too large (max 10 MB)")
 
     try:
         leis, column_info = read_lei_from_excel(content, file.filename)
