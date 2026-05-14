@@ -1,6 +1,6 @@
-# 🏦 FindLEI — LEI Batch Compliance Checker
+# 🏦 FindLEI, LEI Batch Compliance Checker
 
-> A production-grade B2B web application for banking compliance officers. Upload a client spreadsheet, verify every LEI against GLEIF and lei-lookup.com, and download the enriched file — with Entity Status and Next Renewal Date written back into Excel automatically.
+> A production-grade B2B web application for banking compliance officers. Upload a client spreadsheet, verify every LEI against GLEIF and lei-lookup.com, and download the enriched file, with Entity Status and Next Renewal Date written back into Excel automatically.
 
 [![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=flat-square&logo=python)](https://python.org)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.115-009688?style=flat-square&logo=fastapi)](https://fastapi.tiangolo.com)
