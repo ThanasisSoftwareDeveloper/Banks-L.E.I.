@@ -193,8 +193,4 @@ GPL-3.0 — see [LICENSE](LICENSE)
 
 ---
 
-<<<<<<< HEAD
 Built by [Thanasis Koufos](https://www.thanasis-codes.eu) · [GitHub](https://github.com/ThanasisSoftwareDeveloper)
-=======
-Built by [Thanasis Koufos](https://www.thanasis-codes.eu) · [GitHub](https://github.com/ThanasisSoftwareDeveloper)
->>>>>>> d647e15 (docs: update README)
