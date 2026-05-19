@@ -48,7 +48,10 @@ Banks-L.E.I./
 ├── Dockerfile
 └── docker-compose.yml
 ```
-
+> **Note:** Lei_checker.py
+Excel_hander.py
+Rate_limiter.py
+have deleted for safety reasons.
 ---
 
 ## 🚀 Setup
