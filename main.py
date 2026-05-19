@@ -163,18 +163,20 @@ def _validate_file_magic(content: bytes, suffix: str) -> bool:
         return content[:8] == b"\xD0\xCF\x11\xE0\xA1\xB1\x1A\xE1"
     return False
 
-
-
 def _validate_excel_zip_structure(content: bytes, suffix: str) -> bool:
-    """For .xlsx/.xlsm: verify internal ZIP structure matches Excel format."""
-    if suffix not in {".xlsx", ".xlsm"}:
-        return True  # .xls και .ods δεν είναι ZIP — παράλειψε
+    """For .xlsx/.xlsm/.ods: verify internal ZIP structure matches format."""
+    if suffix not in {".xlsx", ".xlsm", ".ods"}:
+        return True  # .xls δεν είναι ZIP — παράλειψε
     try:
         with zipfile.ZipFile(io.BytesIO(content)) as zf:
             names = zf.namelist()
-            return "[Content_Types].xml" in names and "xl/workbook.xml" in names
+            if suffix in {".xlsx", ".xlsm"}:
+                return "[Content_Types].xml" in names and "xl/workbook.xml" in names
+            if suffix == ".ods":
+                return "mimetype" in names and "content.xml" in names
     except zipfile.BadZipFile:
         return False
+    return False
     
 
 
