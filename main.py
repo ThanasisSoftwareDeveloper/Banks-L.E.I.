@@ -16,6 +16,8 @@ import json
 import logging
 import time
 import uuid
+import zipfile
+import io
 from pathlib import Path
 from typing import Dict, Optional
 
@@ -162,6 +164,20 @@ def _validate_file_magic(content: bytes, suffix: str) -> bool:
     return False
 
 
+
+def _validate_excel_zip_structure(content: bytes, suffix: str) -> bool:
+    """For .xlsx/.xlsm: verify internal ZIP structure matches Excel format."""
+    if suffix not in {".xlsx", ".xlsm"}:
+        return True  # .xls και .ods δεν είναι ZIP — παράλειψε
+    try:
+        with zipfile.ZipFile(io.BytesIO(content)) as zf:
+            names = zf.namelist()
+            return "[Content_Types].xml" in names and "xl/workbook.xml" in names
+    except zipfile.BadZipFile:
+        return False
+    
+
+
 # ── Routes ────────────────────────────────────────────────────────────────────
 
 @app.post("/api/upload")
@@ -202,6 +218,11 @@ async def upload_excel(request: Request, file: UploadFile = File(...)):
         raise HTTPException(
             status_code=400,
             detail="File content does not match the declared file type."
+        )
+    if not _validate_excel_zip_structure(content, suffix):
+        raise HTTPException(
+            status_code=400,
+            detail="Invalid Excel file structure."
         )
     if len(content) > MAX_UPLOAD_BYTES:
         raise HTTPException(status_code=413, detail="File too large (max 10 MB)")
